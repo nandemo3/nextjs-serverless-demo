@@ -12,7 +12,7 @@ export class Frontend extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id);
 
-    // Next.js standaloneを動かすLambdaの定義
+    // Lambdaの定義
     const handler = new DockerImageFunction(this, 'Handler', {
       code: DockerImageCode.fromImageAsset('../', {
         platform: Platform.LINUX_AMD64,
@@ -21,7 +21,7 @@ export class Frontend extends cdk.Stack {
       timeout: Duration.seconds(30),
     });
 
-    // Amazon API Gateway HTTP APIの定義
+    // API GatewayIの定義
     new HttpApi(this, 'Api', {
       apiName: 'Frontend',
       defaultIntegration: new HttpLambdaIntegration('Integration', handler),
